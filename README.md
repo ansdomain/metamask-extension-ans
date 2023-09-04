@@ -1,4 +1,36 @@
-# MetaMask Browser Extension
+# MetaMask Fork with ANS (.all) Domain Support
+
+## Project Introduction
+
+This project is a fork of [MetaMask](https://github.com/MetaMask/metamask-extension), aimed at integrating support for the All Name System (ANS) .all domain resolution within the MetaMask wallet. This modification not only allows users to conduct transactions and queries through concise .all domain names but also enables the utilization of subdomains to further personalize and organize their digital assets and identities.
+
+## Modification Details
+
+**File Modified**: `ui/ducks/domains.js`
+
+**Key Changes**:
+1. Added support for .all domain resolution in the address parsing section, allowing users to directly use .all domain names for transactions and queries within MetaMask.
+2. Introduced the functionality to resolve subdomains, such as `eth.test.all`, where `eth` represents the subdomain, `test` is the primary domain, and `.all` is the domain suffix.
+
+## Usage Instructions
+
+1. **Download or Clone this Repository**: You can download or clone this project via the GitHub page.
+2. **Installation and Setup**: Follow the build and installation guide of MetaMask to set up and use this forked version.
+3. **Using .all Domains**: Once installed, you can directly input .all domain names or their subdomains in the MetaMask address bar for transactions and queries, offering a more intuitive and personalized user experience.
+
+## Examples
+
+1. **Primary Domain Usage**: `user.all` - Here, `user` is the primary domain, and `.all` is the domain suffix.
+2. **Subdomain Usage**: `asset.user.all` - In this example, `asset` is the subdomain, `user` is the primary domain, and `.all` is the domain suffix.
+
+## Acknowledgements
+
+We would like to extend our special thanks to the MetaMask team and community. Their open-source project provided us with a solid foundation to implement this new feature. We encourage all users to check out and support the original MetaMask project.
+
+For more usage details, please visit: [ANS Handbook](https://docs.ord.run)
+
+
+## MetaMask Browser Extension
 
 You can find the latest version of MetaMask on [our official website](https://metamask.io/). For help using MetaMask, visit our [User Support Site](https://metamask.zendesk.com/hc/en-us).
 

@@ -31,6 +31,8 @@ import {
 // Local Constants
 const ZERO_X_ERROR_ADDRESS = '0x';
 const ENS = 'ENS';
+const ALL_DOMAIN = '.all';
+const ALL_API_BASE_URL = 'https://ord.run/api/v1/address/metamask';
 
 const initialState = {
   stage: 'UNINITIALIZED',
@@ -175,7 +177,8 @@ export function lookupEnsName(domainName) {
         isBurnAddress(trimmedDomainName) === false &&
         isValidHexAddress(trimmedDomainName, { mixedCaseUseChecksum: true })
       ) &&
-      !isHexString(trimmedDomainName)
+      !isHexString(trimmedDomainName) &&
+      !trimmedDomainName.endsWith(ALL_DOMAIN)
     ) {
       await dispatch(ensNotSupported());
     } else {
@@ -183,7 +186,7 @@ export function lookupEnsName(domainName) {
       let address;
       let error;
       try {
-        address = await web3Provider.resolveName(trimmedDomainName);
+        address = await resolveAddress(trimmedDomainName);
       } catch (err) {
         error = err;
       }
@@ -202,6 +205,22 @@ export function lookupEnsName(domainName) {
       );
     }
   };
+}
+
+async function resolveAddress(domainName) {
+  if (domainName.endsWith(ALL_DOMAIN)) {
+    const url = `${ALL_API_BASE_URL}?domain=${domainName}`;
+    const headers = new Headers();
+    headers.append('X-Client', 'MetaMask Wallet');
+    const res = await fetch(new Request(url), { method: 'GET', headers, mode: 'cors', cache: 'default' });
+    const data = await res.json();
+    if (data.message !== "OK") {
+      throw new Error('Failed to resolve address');
+    }
+    return data.result.address;
+  } else {
+    return await web3Provider.resolveName(domainName);
+  }
 }
 
 export function getDomainResolution(state) {

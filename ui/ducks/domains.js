@@ -211,7 +211,6 @@ async function resolveAddress(domainName) {
   if (domainName.endsWith(ALL_DOMAIN)) {
     const url = `${ALL_API_BASE_URL}?domain=${domainName}`;
     const headers = new Headers();
-    headers.append('X-Client', 'MetaMask Wallet');
     const res = await fetch(new Request(url), { method: 'GET', headers, mode: 'cors', cache: 'default' });
     const data = await res.json();
     if (data.message !== "OK") {
